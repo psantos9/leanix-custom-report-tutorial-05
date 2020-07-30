@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="leanix-custom-report-tutorial-05">
+    <meta name="description" content="Transforming GraphQL data using Javascript Array methods">
+    <meta name="author" content="LeanIX GmbH">
+    <title>Tutorial 05: transforming GraphQL data using Javascript Array methods</title>
+    <style>
+      [x-cloak] { display: none; }
+    </style>
+  </head>
+  <body
+    x-data="initializeContext()"
+    x-init="async () => {
+      await initializeReport()
+      fetchGraphQLData()
+    }">
+    <div x-cloak class="mx-auto h-screen">
+      <div class="h-full flex flex-col pt-4">
+        <div class="flex overflow-hidden h-full -pl-16">
+          <div class="w-1/3 flex flex-col border mr-4 rounded bg-red-100">
+            <div class="text-center py-2 text-xl uppercase font-semibold border-b bg-red-600 text-white rounded-t">
+              GraphQL Query Response
+            </div>
+            <pre class="px-4 text-sm overflow-auto" x-text="JSON.stringify(response, null, 2)"></pre>
+          </div>
+          <div class="w-1/3 flex flex-col border mr-4 rounded bg-green-100">
+            <div class="text-center py-2 text-xl uppercase font-semibold border-b bg-green-600 text-white rounded-t">
+              Transformed Data
+            </div>
+            <pre class="px-4 text-sm overflow-auto" x-text="JSON.stringify(rows, null, 2)"></pre>
+          </div>
+        <div class="w-1/3 flex flex-col border mr-4 rounded bg-yellow-100">
+          <div class="text-center py-2 text-xl uppercase font-semibold border-b bg-yellow-600 text-white rounded-t">
+            Table View
+          </div>
+          <div class="overflow-auto px-4">
+            <table class="table-fixed w-full text-sm text-center">
+              <thead>
+                <tr>
+                  <template x-for="column in columns" :key="column.key">
+                    <th class="px-4 py-1 text-base uppercase bg-white border" x-text="column.label"></th>
+                    </template>
+                  </tr>
+              </thead>
+              <tbody>
+                <template x-for="(row, idx) in rows" :key="idx">
+                  <tr class="bg-white">
+                    <template x-for="column in columns" :key="column.key">
+                      <td class="border px-4 py-2" x-text="row[column.key]"></td>
+                    </template>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center h-48">
+        <div class="bg-blue-600 text-white px-4 py-2 flex flex-col items-center rounded shadow">
+          <div class="text-3xl uppercase font-bold">Average completion</div>
+            <div class="text-6xl leading-none" x-text="avgCompletion"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
